@@ -4,7 +4,7 @@ defmodule Machxir.MachO.LoadCommand.BuildVersion do
   """
 
   alias Machxir.ByteCrawler
-  alias Machxir.MachO.LoadCommand.BuildVersion.BuildToolVersion
+  alias Machxir.MachO.LoadCommand.BuildVersion.Tool
 
   @spec parse(pid, :describe | :format) :: [
           String.t() | list
@@ -21,7 +21,7 @@ defmodule Machxir.MachO.LoadCommand.BuildVersion do
       Enum.map(
         1..ntools//1,
         fn n ->
-          ["Build tool version #{n}:", BuildToolVersion.parse(pid, opt)]
+          ["Build tool version #{n}:", Tool.parse(pid, opt)]
         end
       )
 

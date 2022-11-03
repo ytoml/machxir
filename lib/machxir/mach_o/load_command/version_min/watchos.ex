@@ -1,6 +1,6 @@
-defmodule Machxir.MachO.LoadCommand.Unixthread do
+defmodule Machxir.MachO.LoadCommand.VersionMin.Watchos do
   @moduledoc """
-  Parsing LC_UNIXTHREAD.
+  Parsing LC_VERSION_MIN_WATCHOS.
   """
 
   alias Machxir.ByteCrawler
@@ -14,4 +14,3 @@ defmodule Machxir.MachO.LoadCommand.Unixthread do
   def parse(pid, opt) do
   end
 end
-

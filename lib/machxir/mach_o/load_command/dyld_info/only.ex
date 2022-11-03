@@ -1,6 +1,6 @@
-defmodule Machxir.MachO.LoadCommand.VersionMinWatchos do
+defmodule Machxir.MachO.LoadCommand.DyldInfo.Only do
   @moduledoc """
-  Parsing LC_VERSION_MIN_WATCHOS.
+  Parsing LC_DYLD_INFO_ONLY.
   """
 
   alias Machxir.ByteCrawler
@@ -14,4 +14,3 @@ defmodule Machxir.MachO.LoadCommand.VersionMinWatchos do
   def parse(pid, opt) do
   end
 end
-

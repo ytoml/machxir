@@ -1,4 +1,4 @@
-defmodule Machxir.MachO.LoadCommand.BuildVersion.BuildToolVersion do
+defmodule Machxir.MachO.LoadCommand.BuildVersion.Tool do
   alias Machxir.ByteCrawler
 
   @doc """

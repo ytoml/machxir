@@ -1,6 +1,6 @@
-defmodule Machxir.MachO.LoadCommand.VersionMinMacosx do
+defmodule Machxir.MachO.LoadCommand.VersionMin.Tvos do
   @moduledoc """
-  Parsing LC_VERSION_MIN_MACOSX.
+  Parsing LC_VERSION_MIN_TVOS.
   """
 
   alias Machxir.ByteCrawler
@@ -14,4 +14,3 @@ defmodule Machxir.MachO.LoadCommand.VersionMinMacosx do
   def parse(pid, opt) do
   end
 end
-

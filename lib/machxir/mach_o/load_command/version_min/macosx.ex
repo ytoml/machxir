@@ -1,6 +1,6 @@
-defmodule Machxir.MachO.LoadCommand.DyldInfoOnly do
+defmodule Machxir.MachO.LoadCommand.VersionMin.Macosx do
   @moduledoc """
-  Parsing LC_DYLD_INFO_ONLY.
+  Parsing LC_VERSION_MIN_MACOSX.
   """
 
   alias Machxir.ByteCrawler
@@ -14,4 +14,3 @@ defmodule Machxir.MachO.LoadCommand.DyldInfoOnly do
   def parse(pid, opt) do
   end
 end
-
