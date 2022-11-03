@@ -1,6 +1,7 @@
 # Machxir
 
-Mach-O parser written in Elixir
+Mach-O parser written in Elixir (WIP).
+This implementation refers to [macho](https://github.com/macmade/macho) in C++.
 
 ## Installation
 
