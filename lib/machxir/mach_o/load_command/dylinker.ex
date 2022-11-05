@@ -16,10 +16,10 @@ defmodule Machxir.MachO.LoadCommand.Dylinker do
   def parse(pid, arch) do
     offset = ByteCrawler.read_uint32(pid)
     ByteCrawler.read_rawbytes(pid, offset - 12) |> Utils.check_zero_or_empty(__MODULE__)
-    name = LcStr.read_string(pid, arch)
+    name = LcStr.get_annotated_string(pid, offset, arch)
 
     [
-      "name: #{name} (offset #{offset})"
+      "name: #{name}"
     ]
   end
 end

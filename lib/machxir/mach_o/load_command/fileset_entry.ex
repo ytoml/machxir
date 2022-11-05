@@ -20,12 +20,12 @@ defmodule Machxir.MachO.LoadCommand.FilesetEntry do
     # reserved
     ByteCrawler.read_uint32(pid) |> Utils.check_zero_or_empty(__MODULE__)
     ByteCrawler.read_rawbytes(pid, offset - 32) |> Utils.check_zero_or_empty(__MODULE__)
-    entry_id = LcStr.read_string(pid, arch)
+    entry_id = LcStr.get_annotated_string(pid, offset, arch)
 
     [
       "vmaddr:   #{vmaddr}",
       "fileoff:  #{fileoff}",
-      "entry_id: #{entry_id} (offset #{offset})"
+      "entry_id: #{entry_id}"
     ]
   end
 end

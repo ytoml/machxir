@@ -1,11 +1,20 @@
 defmodule Machxir.MachO.LcStr do
   alias Machxir.ByteCrawler
+  alias Machxir.Utils
 
   @doc """
+  Read string and annotate with offset.
   `pid` must be of the `ByteCrawler`server.
   """
-  def read_string(_pid, :mach), do: "Not supported"
-  def read_string(pid, :mach64), do: ByteCrawler.take_all(pid)
-  def read_string(_pid, _size, :mach), do: "Not supported"
-  def read_string(pid, bytesize, :mach64), do: ByteCrawler.read_rawbytes(pid, bytesize)
+  def get_annotated_string(_pid, addr, :mach),
+    do: "Address (#{Utils.to_padded_hex32(addr)})"
+
+  def get_annotated_string(pid, offset, :mach64),
+    do: "#{ByteCrawler.take_all(pid)} (offset #{offset})"
+
+  def get_annotated_string(_pid, _size, addr, :mach),
+    do: "Address (#{Utils.to_padded_hex32(addr)})"
+
+  def get_annotated_string(pid, bytesize, offset, :mach64),
+    do: "#{ByteCrawler.read_rawbytes(pid, bytesize)} (offset #{offset})"
 end

@@ -17,10 +17,10 @@ defmodule Machxir.MachO.LoadCommand.Dylib do
     current_version = ByteCrawler.read_uint32(pid)
     compatible_version = ByteCrawler.read_uint32(pid)
     ByteCrawler.read_rawbytes(pid, offset - 24) |> Utils.check_zero_or_empty(__MODULE__)
-    name = LcStr.read_string(pid, arch)
+    name = LcStr.get_annotated_string(pid, offset, arch)
 
     [
-      "name:               #{name} (offset #{offset})",
+      "name:               #{name}",
       "timestamp:          #{timestamp}",
       "current_version:    #{current_version}",
       "compatible_version: #{compatible_version}"
