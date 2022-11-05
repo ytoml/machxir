@@ -3,7 +3,7 @@ defmodule Machxir.MachO.LoadCommand.DyldInfo.Only do
   Parsing LC_DYLD_INFO_ONLY.
   """
 
-  alias Machxir.ByteCrawler
+  alias Machxir.MachO.LoadCommand.DyldInfo
 
   @spec parse(pid, :describe | :format) :: [
           String.t() | list
@@ -11,6 +11,5 @@ defmodule Machxir.MachO.LoadCommand.DyldInfo.Only do
   @doc """
   `pid` must be of the `ByteCrawler`server.
   """
-  def parse(pid, opt) do
-  end
+  def parse(pid, opt), do: DyldInfo.parse(pid, opt)
 end
