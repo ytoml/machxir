@@ -4,22 +4,24 @@ defmodule Machxir.MachO.LoadCommand do
   alias Machxir.MachO.LoadCommand
   @req_dyld 0x80000000
 
-  @spec parse(integer, any, binary, any, :describe | :format) :: [String.t() | list]
+  @spec parse(integer, any, binary, any, :mach | :mach64, :describe | :format) :: [
+          String.t() | list
+        ]
   @doc """
   `body` must be the content of command **excluding** `cmd` and `cmdsize`.
   """
-  def parse(cmd, cmdsize, body, endianness, opt \\ :format) when is_binary(body) do
+  def parse(cmd, cmdsize, body, endianness, arch, opt \\ :format) when is_binary(body) do
     {:ok, pid} = ByteCrawler.invoke(body, endianness)
     type = if (cmd &&& @req_dyld) == 0, do: nil, else: :req_dyld
 
     [
       "cmd:     #{format(cmd, type)}",
       "cmdsize: #{cmdsize}",
-      parse_inner(cmd, cmdsize, pid, type, opt)
+      parse_inner(cmd, cmdsize, pid, arch, type, opt)
     ]
   end
 
-  defp parse_inner(cmd, _cmdsize, pid, nil, opt) do
+  defp parse_inner(cmd, _cmdsize, pid, arch, nil, opt) do
     # TODO: appropriate handling for situation where LC_LEQ_DYLD ones are passed.
     case cmd do
       0x01 -> LoadCommand.Segment.parse(pid, opt)
@@ -33,10 +35,10 @@ defmodule Machxir.MachO.LoadCommand do
       0x09 -> LoadCommand.Fvmfile.parse(pid, opt)
       0x0A -> LoadCommand.Prepage.parse(pid, opt)
       0x0B -> LoadCommand.Dysymtab.parse(pid, opt)
-      0x0C -> LoadCommand.LoadDylib.parse(pid, opt)
-      0x0D -> LoadCommand.IdDylib.parse(pid, opt)
-      0x0E -> LoadCommand.LoadDylinker.parse(pid, opt)
-      0x0F -> LoadCommand.IdDylinker.parse(pid, opt)
+      0x0C -> LoadCommand.Dylib.parse(pid, arch, opt)
+      0x0D -> LoadCommand.Dylib.parse(pid, arch, opt)
+      0x0E -> LoadCommand.Dylinker.parse(pid, arch)
+      0x0F -> LoadCommand.Dylinker.parse(pid, arch)
       0x10 -> LoadCommand.PreboundDylib.parse(pid, opt)
       0x11 -> LoadCommand.Routines.parse(pid, opt)
       0x12 -> LoadCommand.SubFramework.parse(pid, opt)
@@ -56,7 +58,7 @@ defmodule Machxir.MachO.LoadCommand do
       0x24 -> LoadCommand.VersionMin.Macosx.parse(pid, opt)
       0x25 -> LoadCommand.VersionMin.Iphoneos.parse(pid, opt)
       0x26 -> LoadCommand.FunctionStarts.parse(pid, opt)
-      0x27 -> LoadCommand.DyldEnvironment.parse(pid, opt)
+      0x27 -> LoadCommand.Dylinker.parse(pid, arch)
       0x29 -> LoadCommand.DataInCode.parse(pid, opt)
       0x2A -> LoadCommand.SourceVersion.parse(pid, opt)
       0x2B -> LoadCommand.DylibCodeSignDrs.parse(pid, opt)
@@ -122,11 +124,11 @@ defmodule Machxir.MachO.LoadCommand do
     end
   end
 
-  defp parse_inner(cmd, _cmdsize, pid, :req_dyld, opt) do
+  defp parse_inner(cmd, _cmdsize, pid, arch, :req_dyld, opt) do
     case cmd &&& bnot(@req_dyld) do
-      0x18 -> LoadCommand.LoadWeakDylib.parse(pid, opt)
+      0x18 -> LoadCommand.Dylib.parse(pid, arch, opt)
       0x1C -> LoadCommand.Rpath.parse(pid, opt)
-      0x1F -> LoadCommand.ReexportDylib.parse(pid, opt)
+      0x1F -> LoadCommand.Dylib.parse(pid, arch, opt)
       0x22 -> LoadCommand.DyldInfo.Only.parse(pid, opt)
       0x23 -> LoadCommand.LoadUpwardDylib.parse(pid, opt)
       0x28 -> LoadCommand.Main.parse(pid, opt)
