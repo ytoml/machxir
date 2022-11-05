@@ -5,4 +5,5 @@ defmodule Machxir.ByteCrawler do
   def read_uint32(pid), do: GenServer.call(pid, {:read, 32})
   def read_uint64(pid), do: GenServer.call(pid, {:read, 64})
   def read_rawbytes(pid, bytesize), do: GenServer.call(pid, {:read_raw, bytesize})
+  def take_all(pid), do: GenServer.call(pid, {:take_all})
 end
