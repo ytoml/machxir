@@ -15,4 +15,17 @@ defmodule Machxir.Utils do
     shift_amounts
     |> Enum.map(&is_pop_at(int, &1))
   end
+
+  @doc """
+  Check the binary and put warning if neither zero-filled nor empty.
+  """
+  def check_zero_or_empty(<<>>, _), do: nil
+
+  def check_zero_or_empty(bin, location) when is_binary(bin) do
+    warn = String.graphemes(bin) |> Enum.any?(fn b -> b != <<0>> end)
+
+    if warn do
+      IO.puts(:standard_error, "[WARN] #{location}: Invalid padding found (#{inspect(bin)})")
+    end
+  end
 end
