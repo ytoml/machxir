@@ -28,4 +28,16 @@ defmodule Machxir.Utils do
       IO.puts(:standard_error, "[WARN] #{location}: Invalid padding found (#{inspect(bin)})")
     end
   end
+
+  @doc """
+  Make hexadecimal string padding up to 16.
+  """
+  def to_padded_hex64(int),
+    do: "0x" <> (int |> Integer.to_string(16) |> String.pad_leading(16, "0"))
+
+  @doc """
+  Make hexadecimal string padding up to 8.
+  """
+  def to_padded_hex32(int),
+    do: "0x" <> (int |> Integer.to_string(16) |> String.pad_leading(8, "0"))
 end

@@ -4,10 +4,24 @@ defmodule Machxir.MachO.LoadCommand.Fvmfile do
   """
 
   alias Machxir.ByteCrawler
+  alias Machxir.MachO.LcStr
+  alias Machxir.Utils
 
+  @spec parse(pid, :mach | :mach64) :: [
+          String.t() | list
+        ]
   @doc """
   `pid` must be of the `ByteCrawler`server.
   """
-  def parse(pid) do
+  def parse(pid, arch) do
+    offset = ByteCrawler.read_uint32(pid)
+    header_addr = ByteCrawler.read_uint32(pid) |> Utils.to_padded_hex32()
+    ByteCrawler.read_rawbytes(pid, offset - 16) |> Utils.check_zero_or_empty(__MODULE__)
+    name = LcStr.read_string(pid, arch)
+
+    [
+      "name:        #{name} (offset #{offset})",
+      "header_addr: #{header_addr}"
+    ]
   end
 end

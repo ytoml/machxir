@@ -1,6 +1,5 @@
 defmodule Machxir.MachO.LcStr do
   alias Machxir.ByteCrawler
-  alias Machxir.Utils
 
   @doc """
   `pid` must be of the `ByteCrawler`server.

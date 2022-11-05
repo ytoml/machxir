@@ -34,7 +34,7 @@ defmodule Machxir.MachO.LoadCommand do
       0x08 -> LoadCommand.Ident.parse(pid, opt)
       0x09 -> LoadCommand.Fvmfile.parse(pid, opt)
       0x0A -> LoadCommand.Prepage.parse(pid, opt)
-      0x0B -> LoadCommand.Dysymtab.parse(pid, opt)
+      0x0B -> LoadCommand.Dysymtab.parse(pid)
       0x0C -> LoadCommand.Dylib.parse(pid, arch, opt)
       0x0D -> LoadCommand.Dylib.parse(pid, arch, opt)
       0x0E -> LoadCommand.Dylinker.parse(pid, arch)
@@ -53,7 +53,7 @@ defmodule Machxir.MachO.LoadCommand do
       0x1D -> LoadCommand.CodeSignature.parse(pid, opt)
       0x1E -> LoadCommand.SegmentSplitInfo.parse(pid, opt)
       0x20 -> LoadCommand.LazyLoadDylib.parse(pid, opt)
-      0x21 -> LoadCommand.EncryptionInfo.parse(pid, opt)
+      0x21 -> LoadCommand.EncryptionInfo.parse(pid)
       0x22 -> LoadCommand.DyldInfo.parse(pid, opt)
       0x24 -> LoadCommand.VersionMin.Macosx.parse(pid, opt)
       0x25 -> LoadCommand.VersionMin.Iphoneos.parse(pid, opt)
@@ -62,7 +62,7 @@ defmodule Machxir.MachO.LoadCommand do
       0x29 -> LoadCommand.DataInCode.parse(pid, opt)
       0x2A -> LoadCommand.SourceVersion.parse(pid, opt)
       0x2B -> LoadCommand.DylibCodeSignDrs.parse(pid, opt)
-      0x2C -> LoadCommand.EncryptionInfo64.parse(pid, opt)
+      0x2C -> LoadCommand.EncryptionInfo64.parse(pid)
       0x2D -> LoadCommand.LinkerOption.parse(pid, opt)
       0x2E -> LoadCommand.LinkerOptimizationHint.parse(pid, opt)
       0x2F -> LoadCommand.VersionMin.Tvos.parse(pid, opt)
@@ -134,7 +134,7 @@ defmodule Machxir.MachO.LoadCommand do
       0x28 -> LoadCommand.Main.parse(pid, opt)
       0x33 -> LoadCommand.DyldExportsTrie.parse(pid, opt)
       0x34 -> LoadCommand.DyldChainedFixups.parse(pid, opt)
-      0x35 -> LoadCommand.FilesetEntry.parse(pid, opt)
+      0x35 -> LoadCommand.FilesetEntry.parse(pid, arch)
       _ -> []
     end
   end

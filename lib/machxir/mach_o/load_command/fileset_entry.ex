@@ -4,10 +4,28 @@ defmodule Machxir.MachO.LoadCommand.FilesetEntry do
   """
 
   alias Machxir.ByteCrawler
+  alias Machxir.MachO.LcStr
+  alias Machxir.Utils
 
+  @spec parse(pid, :mach | :mach64) :: [
+          String.t() | list
+        ]
   @doc """
   `pid` must be of the `ByteCrawler`server.
   """
-  def parse(pid) do
+  def parse(pid, arch) do
+    vmaddr = ByteCrawler.read_uint64(pid) |> Utils.to_padded_hex64()
+    fileoff = ByteCrawler.read_uint64(pid) |> Utils.to_padded_hex64()
+    offset = ByteCrawler.read_uint32(pid)
+    # reserved
+    ByteCrawler.read_uint32(pid) |> Utils.check_zero_or_empty(__MODULE__)
+    ByteCrawler.read_rawbytes(pid, offset - 32) |> Utils.check_zero_or_empty(__MODULE__)
+    entry_id = LcStr.read_string(pid, arch)
+
+    [
+      "vmaddr:   #{vmaddr}",
+      "fileoff:  #{fileoff}",
+      "entry_id: #{entry_id} (offset #{offset})"
+    ]
   end
 end
