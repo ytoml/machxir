@@ -10,11 +10,13 @@ defmodule Machxir.MachO.LcStr do
     do: "Address (#{Utils.to_padded_hex32(addr)})"
 
   def get_annotated_string(pid, offset, :mach64),
-    do: "#{ByteCrawler.take_all(pid)} (offset #{offset})"
+    do: ByteCrawler.take_all(pid) |> annotate(offset)
 
   def get_annotated_string(_pid, _size, addr, :mach),
     do: "Address (#{Utils.to_padded_hex32(addr)})"
 
   def get_annotated_string(pid, bytesize, offset, :mach64),
-    do: "#{ByteCrawler.read_rawbytes(pid, bytesize)} (offset #{offset})"
+    do: ByteCrawler.read_rawbytes(pid, bytesize) |> annotate(offset)
+
+  def annotate(s, offset), do: "#{s} (offset #{offset})"
 end
