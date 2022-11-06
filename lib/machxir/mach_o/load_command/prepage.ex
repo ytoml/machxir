@@ -3,11 +3,13 @@ defmodule Machxir.MachO.LoadCommand.Prepage do
   Parsing LC_PREPAGE.
   """
 
-  alias Machxir.ByteCrawler
-
+  @spec parse(pid) :: [
+          String.t() | list
+        ]
   @doc """
   `pid` must be of the `ByteCrawler`server.
   """
-  def parse(pid) do
+  def parse(_pid) do
+    ["prepage command is for internal use"]
   end
 end
