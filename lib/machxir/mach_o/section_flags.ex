@@ -1,11 +1,18 @@
 defmodule Machxir.MachO.SectionFlags do
   alias Machxir.Utils
 
-  def format(int) do
-    [type: type(int), attributes: attributes(int)]
+  @spec parse(integer, :describe | :format) :: [String.t() | list]
+  def parse(int, :format), do: format(int)
+  def parse(int, :describe), do: description(int)
+
+  defp format(int) do
+    [
+      "type:       #{type(int)}",
+      "attributes: #{attributes(int)}"
+    ]
   end
 
-  def description(int), do: format(int)
+  defp description(int), do: format(int)
 
   defp type(int) do
     case int do
@@ -40,6 +47,7 @@ defmodule Machxir.MachO.SectionFlags do
     (Enum.to_list(8..10) ++ Enum.to_list(25..31))
     |> Utils.generate_one_hots(int)
     |> Enum.map(&flag_string/1)
+    |> Enum.join(",")
   end
 
   defp flag_string(int) do
