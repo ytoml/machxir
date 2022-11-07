@@ -1,6 +1,6 @@
 defmodule Machxir.MachO.LoadCommand.Dylib do
   @moduledoc """
-  Parsing LC_DYLIB.
+  Parsing LC_ID_DYLIB | LC_LOAD_DYLIB, | LC_LOAD_WEAK_DYLIB | LC_REEXPORT_DYLIB
   """
 
   alias Machxir.ByteCrawler

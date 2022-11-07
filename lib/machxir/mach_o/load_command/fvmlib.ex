@@ -1,6 +1,6 @@
 defmodule Machxir.MachO.LoadCommand.Fvmlib do
   @moduledoc """
-  fvmlib_command
+  Parsing LC_IDFVMLIB | LC_LOADFVMLIB.
   """
 
   alias Machxir.ByteCrawler

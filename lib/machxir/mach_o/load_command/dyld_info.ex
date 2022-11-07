@@ -1,6 +1,6 @@
 defmodule Machxir.MachO.LoadCommand.DyldInfo do
   @moduledoc """
-  Parsing LC_DYLD_INFO.
+  Parsing LC_DYLD_INFO | LC_DYLD_INFO_ONLY
   """
 
   alias Machxir.ByteCrawler

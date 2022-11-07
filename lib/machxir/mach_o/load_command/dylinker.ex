@@ -1,6 +1,6 @@
 defmodule Machxir.MachO.LoadCommand.Dylinker do
   @moduledoc """
-  Parsing LC_DYLINKER.
+  Parsing LC_ID_DYLINKER | LC_LOAD_DYLINKER | LC_DYLD_ENVIRONMENT.
   """
 
   alias Machxir.ByteCrawler
