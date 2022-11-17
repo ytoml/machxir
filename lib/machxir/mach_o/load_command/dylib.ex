@@ -4,7 +4,7 @@ defmodule Machxir.MachO.LoadCommand.Dylib do
   """
 
   alias Machxir.ByteCrawler
-  alias Machxir.MachO.LcStr
+  alias Machxir.MachO.{LcStr, Version}
   alias Machxir.Utils
 
   @spec parse(pid, :mach | :mach64, :describe | :format) :: [String.t() | list]
@@ -14,8 +14,8 @@ defmodule Machxir.MachO.LoadCommand.Dylib do
   def parse(pid, arch, opt) do
     offset = ByteCrawler.read_uint32(pid)
     timestamp = ByteCrawler.read_uint32(pid) |> timestamp(opt)
-    current_version = ByteCrawler.read_uint32(pid)
-    compatible_version = ByteCrawler.read_uint32(pid)
+    current_version = ByteCrawler.read_uint32(pid) |> Version.version_string()
+    compatible_version = ByteCrawler.read_uint32(pid) |> Version.version_string()
     ByteCrawler.read_rawbytes(pid, offset - 24) |> Utils.check_zero_or_empty(__MODULE__)
     name = LcStr.get_annotated_string(pid, offset, arch)
 

@@ -1,12 +1,13 @@
 defmodule Machxir.MachO.LoadCommand.BuildVersion.Tool do
   alias Machxir.ByteCrawler
+  alias Machxir.MachO.Version
 
   @doc """
   `pid` must be of the `ByteCrawler`server.
   """
   def parse(pid, opt) do
     tool = ByteCrawler.read_uint32(pid) |> tool(opt)
-    version = ByteCrawler.read_uint32(pid)
+    version = ByteCrawler.read_uint32(pid) |> Version.version_string()
 
     [
       "tool:    #{tool}",
