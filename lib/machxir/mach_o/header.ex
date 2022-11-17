@@ -1,12 +1,13 @@
 defmodule Machxir.MachO.Header do
   alias Machxir.ByteCrawler
 
-  def parse(<<header::binary-28, rest::binary>>, :march_o, endianness),
+  @spec parse(binary, :mach | :mach64, any) :: {list, binary}
+  def parse(<<header::binary-28, rest::binary>>, :mach, endianness),
     do: {parse_inner(header, endianness), rest}
 
   def parse(
         <<header::binary-28, reserved::binary-4, rest::binary>>,
-        :march_o64,
+        :mach64,
         endianness
       ) do
     if reserved != <<0, 0, 0, 0>>,

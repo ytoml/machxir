@@ -62,6 +62,7 @@ defmodule Machxir.MachO.SectionFlags do
       0x00000400 -> "S_ATTR_SOME_INSTRUCTIONS"
       0x00000200 -> "S_ATTR_EXT_RELOC"
       0x00000100 -> "S_ATTR_LOC_RELOC"
+      _ -> "Unknown"
     end
   end
 end

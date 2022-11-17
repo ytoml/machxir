@@ -20,9 +20,6 @@ defmodule Machxir.ByteCrawler.Server do
   end
 
   def handle_call({:read, size, sign}, _from, {bin, endianness}) do
-    # IO.inspect(size)
-    # IO.inspect(bin)
-    # IO.inspect(endianness)
     {got, rest} = read(bin, size, sign, endianness)
     {:reply, got, {rest, endianness}}
   end

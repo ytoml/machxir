@@ -15,6 +15,7 @@ defmodule Machxir.MachO.LoadCommand.BuildVersion do
   def parse(pid, opt) do
     platform = ByteCrawler.read_uint32(pid) |> platform(opt)
     minos = ByteCrawler.read_uint32(pid)
+    sdk = ByteCrawler.read_uint32(pid)
     ntools = ByteCrawler.read_uint32(pid)
 
     build_tool_versions =
@@ -28,6 +29,7 @@ defmodule Machxir.MachO.LoadCommand.BuildVersion do
     [
       "minos:    #{minos}",
       "platform: #{platform}",
+      "sdk:      #{sdk} ",
       "ntools:   #{ntools}",
       build_tool_versions
     ]
