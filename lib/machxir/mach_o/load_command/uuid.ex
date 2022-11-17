@@ -13,10 +13,14 @@ defmodule Machxir.MachO.LoadCommand.Uuid do
   """
   def parse(pid) do
     uuid =
-      ByteCrawler.read_rawbytes(pid, 16)
-      |> :binary.bin_to_list()
-      |> Enum.map(&Integer.to_string/1)
-      |> Enum.join("")
+      [4, 2, 2, 2, 6]
+      |> Enum.map(fn bytesize ->
+        ByteCrawler.read_rawbytes(pid, bytesize)
+        |> :binary.bin_to_list()
+        |> Enum.map(&Integer.to_string(&1, 16))
+        |> Enum.join("")
+      end)
+      |> Enum.join("-")
 
     [
       "uuid: #{uuid}"
