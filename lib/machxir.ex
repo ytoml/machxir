@@ -53,8 +53,13 @@ defmodule Machxir do
       |> Enum.concat()
 
     [
-      "CPU",
-      cpu
+      "Header",
+      [
+        "CPU",
+        cpu,
+        "sizeofcmds: #{header[:sizeofcmds]}",
+        "ncmds:      #{header[:ncmds]}"
+      ]
       | ldcmds_parsed
     ]
   end

@@ -48,6 +48,12 @@ defmodule Machxir.MachO.SectionFlags do
     |> Utils.generate_one_hots(int)
     |> Enum.map(&flag_string/1)
     |> Enum.join(",")
+    |> (fn attr ->
+          case attr do
+            "" -> "(none)"
+            _ -> attr
+          end
+        end).()
   end
 
   defp flag_string(int) do
