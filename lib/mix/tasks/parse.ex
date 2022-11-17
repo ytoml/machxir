@@ -1,6 +1,7 @@
 defmodule Mix.Tasks.Parse do
   @shortdoc "Parse Mach-O file"
   use Mix.Task
+  alias Machxir.Display
 
   def run([]), do: IO.puts("Usage: mix parse [file] [OPTIONS]
   --verbose, -v   rich output
@@ -10,11 +11,11 @@ defmodule Mix.Tasks.Parse do
   def run(args) do
     {flags, files, []} =
       OptionParser.parse(args,
-        strict: [describe: :boolean, verbose: :bool],
-        alias: [d: :describe, v: :verbose]
+        switches: [describe: :boolean, verbose: :boolean],
+        aliases: [d: :describe, v: :verbose]
       )
 
-    mode = if flags[:describe] or flags[:verbose], do: :describe, else: :format
+    mode = if flags[:describe] || flags[:verbose], do: :describe, else: :format
 
     case files do
       [] ->
@@ -24,7 +25,7 @@ defmodule Mix.Tasks.Parse do
         case File.read(file) do
           {:ok, binary} ->
             Machxir.parse(binary, mode)
-            |> IO.puts()
+            |> Display.display()
 
           {:error, posix} ->
             IO.puts(:standard_error, "Error: Reading file failed(#{inspect(posix)}).")
