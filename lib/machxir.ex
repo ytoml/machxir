@@ -43,7 +43,7 @@ defmodule Machxir do
         Task.async(fn -> LoadCommand.parse(cmd, cmdsize, content, endianness, arch, mode) end)
       end)
       |> Enum.map(&Task.await/1)
-      |> Enum.with_index(1)
+      |> Enum.with_index()
       |> Enum.map(fn {lcmd, i} ->
         [
           "Load Command #{i}",
